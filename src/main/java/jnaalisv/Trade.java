@@ -24,4 +24,8 @@ public class Trade {
     public BigDecimal getPrice() {
         return price;
     }
+
+    public LocalDateTime getTimestamp() {
+        return timestamp;
+    }
 }

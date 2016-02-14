@@ -38,9 +38,12 @@ public abstract class Stock {
                 .map(trade -> trade.getPrice().multiply(trade.getQuantityOfShares()))
                 .reduce(BigDecimal.ZERO, (accumulatedTradeTotals, tradeTotal) -> accumulatedTradeTotals.add(tradeTotal));
 
+        LocalDateTime timestampCutOff = LocalDateTime.now().minusMinutes(15l);
+
         BigDecimal sumOfTradeQuantities =
             trades
                     .stream()
+                    .filter(trade -> trade.getTimestamp().isAfter(timestampCutOff))
                     .map(trade -> trade.getQuantityOfShares())
                     .reduce(BigDecimal.ZERO, (accumulatedQuantities, quantityOfShares) -> accumulatedQuantities.add(quantityOfShares));
 
