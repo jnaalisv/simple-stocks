@@ -5,21 +5,17 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Stock {
+public abstract class Stock {
 
-    private String stockSymbol;
-    private StockType stockType;
-    private BigDecimal lastDividend;
-    private BigDecimal fixedDividendPercentage;
-    private BigDecimal parValue;
-    private List<Trade> trades;
-    private BigDecimal tickerPrice;
+    protected String stockSymbol;
+    protected BigDecimal lastDividend;
+    protected BigDecimal parValue;
+    protected List<Trade> trades;
+    protected BigDecimal tickerPrice;
 
-    public Stock(String stockSymbol, StockType stockType, BigDecimal lastDividend, BigDecimal fixedDividendPercentage, BigDecimal parValue) {
+    public Stock(String stockSymbol, BigDecimal lastDividend, BigDecimal parValue) {
         this.stockSymbol = stockSymbol;
-        this.stockType = stockType;
         this.lastDividend = lastDividend;
-        this.fixedDividendPercentage = fixedDividendPercentage;
         this.parValue = parValue;
         this.trades = new ArrayList<>();
         this.tickerPrice = parValue;
@@ -59,4 +55,11 @@ public class Stock {
     public BigDecimal getParValue() {
         return parValue;
     }
+
+    public abstract BigDecimal dividendYield();
+
+    public BigDecimal priceToEarningsRatio() {
+        return this.tickerPrice.divide(lastDividend, 2, BigDecimal.ROUND_HALF_UP);
+    }
+
 }
